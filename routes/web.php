@@ -21,13 +21,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::get('/mail', function () {
-//     return new SeriesCreated(
-//         'the office',
-//         9,
-//         23,
-//         8
-//     );
-// });
-
 require __DIR__ . '/auth.php';
