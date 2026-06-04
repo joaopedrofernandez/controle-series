@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Events\RetrievesAllRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ApiVerify;
+use App\Http\Requests\SeriesFormRequest;
 use App\Models\Series;
 use Illuminate\Http\Request;
 
@@ -56,12 +57,10 @@ class ApiController extends Controller
             ->first();
     }
 
-    public function update(Series $serie, Request $request)
+    public function update(int $serie, Request $request)
     {
-        $serie->fill($request->all());
-        $serie->save();
-
-        return $serie;
+        Series::where('id', $serie)->update($request->all());
+        return Series::where('id', $serie)->first();
     }
 
     public function destroy(int $serie)
