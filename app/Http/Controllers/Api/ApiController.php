@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Api;
 use App\Events\RetrievesAllRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ApiVerify;
-use App\Http\Requests\SeriesFormRequest;
 use App\Models\Series;
 use Illuminate\Http\Request;
 
