@@ -16,8 +16,10 @@ class RemoveImg
 
     public function handle(FlameCover $event): void
     {
-        if ($event->path !== "series-cover/imagemPd.png") {
-            Storage::disk('public')->delete($event->path);
+        if (!empty($event->path)) {
+            if ($event->path !== "series-cover/imagemPd.png") {
+                Storage::disk('public')->delete($event->path);
+            }
         }
     }
 }

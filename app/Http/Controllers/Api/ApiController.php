@@ -36,7 +36,7 @@ class ApiController extends Controller
             ->json(Series::all(), 203);
     }
 
-    public function upload(Request $request)
+    public function upload(ApiVerify $request)
     {
         if ($request->hasFile('cover')) {
             $request->file('cover')
@@ -56,13 +56,17 @@ class ApiController extends Controller
             ->first();
     }
 
-    public function update(Request $request, string $id)
+    public function update(Series $serie, Request $request)
     {
-        //
+        $serie->fill($request->all());
+        $serie->save();
+
+        return $serie;
     }
 
-    public function destroy(string $id)
+    public function destroy(int $serie)
     {
-        //
+        Series::destroy($serie);
+        return response()->noContent();
     }
 }
