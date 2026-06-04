@@ -16,6 +16,5 @@ class ListenerSeriesRepository
     public function handle(RetrievesAllRequest $event): void
     {
         $this->repository->add($event->all);
-        
     }
 }
