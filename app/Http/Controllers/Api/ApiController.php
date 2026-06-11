@@ -65,6 +65,7 @@ class ApiController extends Controller
     public function destroy(int $serie)
     {
         Series::destroy($serie);
+        // no content é uma resposta vazia
         return response()->noContent();
     }
 }
