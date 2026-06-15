@@ -18,7 +18,12 @@ class SeriesController extends Controller
         $series = Series::all();
         $mensagem = $request->session()->get('mensagem.sucesso');
 
-        return view('series.index', compact(['series', 'mensagem']));
+        return view('series.index', compact(
+            [
+                'series',
+                'mensagem'
+            ]
+        ));
     }
 
     public function create()
