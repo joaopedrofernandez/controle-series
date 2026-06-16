@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\ApiController;
+use App\Models\Episode;
+use App\Models\Season;
+use App\Models\Series;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,3 +13,16 @@ Route::get('/user', function (Request $request) {
 
 Route::apiResource('/serie', ApiController::class);
 Route::post('/serie/upload', [ApiController::class, 'upload']);
+Route::get('/serie/{series}/episodes', function (Series $series, Request $request) {
+    
+    $seriesSeason = $series->with('seasons.episodes')->first();
+    return $seriesSeason->seasons->first();
+});
+
+Route::patch('/episodes/{episode}', function (Episode $episode, Request $request) {
+
+    $episode->watched = $request->watched;
+    $episode->save();
+
+    return $episode;
+});
