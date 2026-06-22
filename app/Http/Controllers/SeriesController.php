@@ -10,12 +10,15 @@ class SeriesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')
+            ->except('index');
     }
 
     public function index(Request $request)
     {
-        $series = Series::all();
+        $query = Series::query();
+        $series = $query->paginate(2);
+
         $mensagem = $request->session()->get('mensagem.sucesso');
 
         return view('series.index', compact(

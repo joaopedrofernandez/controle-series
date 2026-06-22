@@ -1,11 +1,7 @@
 <?php
 
-use App\Http\Controllers\EpisodesController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SeriesController;
-use App\Http\Middleware\Autenticador;
-use App\Mail\SeriesCreated;
 use Illuminate\Support\Facades\Route;
 
 Route::resource('/series', SeriesController::class)
