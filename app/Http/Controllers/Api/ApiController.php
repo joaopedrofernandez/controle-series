@@ -14,9 +14,15 @@ class ApiController extends Controller
 {
     public function __construct() {}
 
-    public function index()
+    public function index(Request $request)
     {
-        return Series::all();
+        $query = Series::query();
+
+        if ($request->has('nome')):
+            $query->whereNome(ucfirst($request->nome));
+        endif;
+
+        return $query->paginate(2);
     }
 
     public function store(ApiVerify $request)
@@ -33,7 +39,7 @@ class ApiController extends Controller
         );
 
         return response()
-            ->json(Series::all(), 203);
+            ->json(Series::all(), 201);
     }
 
     public function upload(ApiVerify $request)
@@ -44,22 +50,24 @@ class ApiController extends Controller
         }
 
         return response()
-            ->json(Series::all());
+            ->json(Series::all(), 201);
     }
 
     public function show(int $serie)
     {
-        return Series::whereId($serie)
-            ->with('seasons.episodes')
-            // ->first() vai retornar somente o objeto {} e nao a collection -> []
-            // para retornar o array [] ->get()
-            ->first();
+        $seriesModel = Series::with('seasons.episodes')->find($serie);
+        if ($seriesModel === null) {
+            return response()
+                ->json(['message' => "Inteiro não existente"], 404);
+        }
+
+        return $seriesModel;
     }
 
     public function update(int $serie, Request $request)
     {
-        Series::where('id', $serie)->update($request->all());
-        return Series::where('id', $serie)->first();
+        Series::where("id", $serie)->update($request->all());
+        return Series::whereId($serie)->first();
     }
 
     public function destroy(int $serie)

@@ -13,14 +13,17 @@ Route::get('/user', function (Request $request) {
 
 Route::apiResource('/serie', ApiController::class);
 Route::post('/serie/upload', [ApiController::class, 'upload']);
-Route::get('/serie/{series}/episodes', function (Series $series, Request $request) {
-    
-    $seriesSeason = $series->with('seasons.episodes')->first();
-    return $seriesSeason->seasons->first();
+
+Route::get('/serie/{series}/seasons', function (Series $series) {
+    return $series->seasons;
+});
+
+Route::get('/serie/{series}/episodes', function (Series $series) {
+    // usar o metodo show
+    return $series->episodes;
 });
 
 Route::patch('/episodes/{episode}', function (Episode $episode, Request $request) {
-
     $episode->watched = $request->watched;
     $episode->save();
 
